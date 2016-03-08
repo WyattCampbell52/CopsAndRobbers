@@ -5,6 +5,9 @@
  */
 package copsandrobbers;
 
+import environment.ApplicationStarter;
+import java.awt.Dimension;
+
 /**
  *
  * @author WyattCampbell
@@ -16,6 +19,7 @@ public class CopsAndRobbers {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        ApplicationStarter.run(new String[0], "Bank Heist!", new Dimension(1439, 900), new Heist());
     }
     
 }
