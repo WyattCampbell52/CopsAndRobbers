@@ -32,15 +32,17 @@ class Heist extends Environment {
     Bank bank;
     Projectile shoot;
     Robber robber;
+    Character character;
     CrossHairs crossHairs;
     CheckIntercetion checkIntercetion;
     private ArrayList<Projectile> bullet;
     private ArrayList<Cop> cops;
     private String direction;
     private Point mousePosition;
-    int robberSpeed = 2;
+    int characterSpeed = 2;
 
     public Heist() {
+        character = new Character(0, 0, 0.0, CharacterType.RobberWolf);
         bank = new Bank();
         robber = new Robber(0, 0, 0.0);
         bullet = new ArrayList<>();
@@ -50,12 +52,14 @@ class Heist extends Environment {
                 mousePosition = e.getPoint();
                 repaint();
                 robber.setAngleRadians(TrigonometryCalculator.calculateAngle(robber.centreOfMass(), mousePosition) + .75);
+                character.setAngleRadians(TrigonometryCalculator.calculateAngle(character.centreOfMass(), mousePosition) + .75);
             }
         });
         setUpSound();
         cops = new ArrayList<>();
         cops.add(new Cop(100, 200, PROPERTIES));
     }
+    
     SoundManager soundManager;
     public static final String RELOAD = "Relaod";
     public static final String EMPTYCLIP = "Empty Clip";
@@ -87,8 +91,11 @@ class Heist extends Environment {
                 projectile.move();
             }
         }
-        if (robber != null) {
-            robber.move();
+//        if (robber != null) {
+//            robber.move();
+//        }
+        if (character != null) {
+            character.move();
         }
     }
 
@@ -96,24 +103,24 @@ class Heist extends Environment {
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
 //            robber.move(-1,0);
-            robber.setVelocity(new Velocity(-robberSpeed, 0));
+            character.setVelocity(new Velocity(-characterSpeed, 0));
             direction = "Left";
-            System.out.println(robber.getX());
+            System.out.println(character.getX());
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
 //            robber.move(1,0);
-            robber.setVelocity(new Velocity(robberSpeed, 0));
+            character.setVelocity(new Velocity(characterSpeed, 0));
             direction = "Right";
-            System.out.println(robber.getX());
+            System.out.println(character.getX());
 
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
 //            robber.move(0,-1);
-            robber.setVelocity(new Velocity(0, -robberSpeed));
+            character.setVelocity(new Velocity(0, -characterSpeed));
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
 //            robber.move(0,1);
-            robber.setVelocity(new Velocity(0, robberSpeed));
+            character.setVelocity(new Velocity(0, characterSpeed));
         }
 //        bulleting for now
-        if (e.getKeyCode() == KeyEvent.VK_G || robber.mode == "Engaging") {
+        if (e.getKeyCode() == KeyEvent.VK_G || character.mode == "Engaging") {
             addMouseMotionListener(new MouseAdapter() {
 //                robber.setImage();
                 @Override
@@ -122,21 +129,21 @@ class Heist extends Environment {
                     repaint();
 //                    System.out.println("Angle = " + TrigonometryCalculator.calculateAngle(robber.centreOfMass(), e.getPoint()) + " radians");
                     crossHairs = new CrossHairs(mousePosition);
-                    robber.mode = "Suspicious";
+                    character.mode = "Suspicious";
                 }
             });
         }
-        
-        if (robber.mode == "Engaging" || robber.mode == "Suspicious") {
-        if (e.getKeyCode() == KeyEvent.VK_R) {
-            if (robber.magCount > 0) {
-                if (robber.bulletCount < 25) {
-                    soundManager.play(RELOAD, 1);
-                    robber.reload();
+
+        if (character.mode == "Engaging" || character.mode == "Suspicious") {
+            if (e.getKeyCode() == KeyEvent.VK_R) {
+                if (character.magCount > 0) {
+                    if (character.bulletCount < 25) {
+                        soundManager.play(RELOAD, 1);
+                        character.reload();
+                    }
                 }
             }
         }
-    }
     }
 
     @Override
@@ -145,21 +152,31 @@ class Heist extends Environment {
                 || (e.getKeyCode() == KeyEvent.VK_D)
                 || (e.getKeyCode() == KeyEvent.VK_W)
                 || (e.getKeyCode() == KeyEvent.VK_S)) {
-            robber.stop();
+            character.stop();
 //            robber.setVelocity(new Velocity(0, 0));
         }
     }
 
     @Override
     public void environmentMouseClicked(MouseEvent e) {
-        if (robber.bulletCount > 0 && robber.mode == "Suspicious") {
+//        if (robber.bulletCount > 0 && robber.mode == "Suspicious") {
+//            System.out.println("shot");
+//            bullet.add(new Projectile(robber.centreOfMass(), TrigonometryCalculator.calculateVelocity(robber.centreOfMass(), mousePosition, 50), -robber.getAngleRadians()));
+//            robber.bulletCount = robber.bulletCount - 1;
+//            soundManager.play(SILENCESHOT, 1);
+//                soundManager.play(BULLETDROP, 1);
+//            
+//        } else if (robber.bulletCount == 0) {
+//            soundManager.play(EMPTYCLIP, 1);
+//        }
+        if (character.bulletCount > 0 && character.mode == "Suspicious") {
             System.out.println("shot");
-            bullet.add(new Projectile(robber.centreOfMass(), TrigonometryCalculator.calculateVelocity(robber.centreOfMass(), mousePosition, 50), -robber.getAngleRadians()));
-            robber.bulletCount = robber.bulletCount - 1;
+            bullet.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 50), -character.getAngleRadians()));
+            character.bulletCount = character.bulletCount - 1;
             soundManager.play(SILENCESHOT, 1);
-                soundManager.play(BULLETDROP, 1);
-            
-        } else if (robber.bulletCount == 0) {
+            soundManager.play(BULLETDROP, 1);
+
+        } else if (character.bulletCount == 0) {
             soundManager.play(EMPTYCLIP, 1);
         }
     }
@@ -168,7 +185,7 @@ class Heist extends Environment {
     public void paintEnvironment(Graphics graphics) {
         if (bank != null) {
             bank.draw(graphics);
-            graphics.drawString("Bullets" + robber.bulletCount + "/" + robber.magCount, 300, 300);
+            graphics.drawString("Bullets" + character.bulletCount + "/" + character.magCount, 300, 300);
         }
         if (crossHairs != null) {
             crossHairs.draw(graphics);
@@ -185,6 +202,9 @@ class Heist extends Environment {
         }
         if (robber != null) {
             robber.draw(graphics);
+        }
+        if (character != null) {
+            character.draw(graphics);
         }
     }
 }
