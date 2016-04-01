@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Cop {
         bulletCount = PRIMARY_BULLET_COUNT;
         magCount = 5;
         mode = "Patrol";
+        health = 1;
     }
 
     public Cop(int x, int y, double angleRadians) {
@@ -42,7 +44,7 @@ public class Cop {
     public void draw(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics;
         AffineTransform olde = g2d.getTransform();
-        
+
         AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(getAngleRadians()));
         at.setToRotation(getAngleRadians() - 90, getX() + (getImage().getWidth(null) / 2), getY() + (getImage().getHeight(null) / 2));
         g2d.setTransform(at);
@@ -50,7 +52,7 @@ public class Cop {
         graphics.drawRect(getX(), getY(), getImage().getWidth(null), getImage().getHeight(null));
     }
 //</editor-fold>
-    
+
 //<editor-fold defaultstate="collapsed" desc="Properties">
     private int x;
     private int y;
@@ -61,70 +63,70 @@ public class Cop {
     private Velocity velocity;
     private Image image;
     private double angleRadians;
-    
+
     /**
      * @return the x
      */
     public int getX() {
         return x;
     }
-    
+
     /**
      * @param x the x to set
      */
     public void setX(int x) {
         this.x = x;
     }
-    
+
     /**
      * @return the y
      */
     public int getY() {
         return y;
     }
-    
+
     /**
      * @param y the y to set
      */
     public void setY(int y) {
         this.y = y;
     }
-    
+
     /**
      * @return the velocity
      */
     public Velocity getVelocity() {
         return velocity;
     }
-    
+
     /**
      * @param velocity the velocity to set
      */
     public void setVelocity(Velocity velocity) {
         this.velocity = velocity;
     }
-    
+
     /**
      * @return the image
      */
     public Image getImage() {
         return image;
     }
-    
+
     /**
      * @param image the image to set
      */
     public void setImage(Image image) {
         this.image = image;
     }
-    
+
     /**
      * @return the angleRadians
      */
     public double getAngleRadians() {
         return angleRadians;
     }
-    
+
     /**
      * @param angleRadians the angleRadians to set
      */
@@ -145,9 +147,9 @@ public class Cop {
     public void setHealth(int health) {
         this.health = health;
     }
-    
-    public Rectangle hitBox(){
-        return new Rectangle(x, y, getImage().getWidth(null), getImage().getHeight(null)/8);
+
+    public Rectangle hitBox() {
+        return new Rectangle(x, y, getImage().getWidth(null), getImage().getHeight(null) / 8);
     }
 }
 //</editor-fold>
