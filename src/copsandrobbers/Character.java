@@ -90,11 +90,7 @@ public class Character {
             graphics.setColor(Color.BLUE);
         }
 
-        graphics.drawRect(getX(), getY(), 60, 90);
-//        graphics.drawImage(getCharacterImage(), getX(), getY(), null);
-
-//        graphics.fillOval(getCenterOfMass().x, getCenterOfMass().y, 10, 10);
-        
+        graphics.drawRect(getX(), getY(), 60, 90);      
         
         
         Graphics2D g2d = (Graphics2D) graphics;
@@ -103,15 +99,16 @@ public class Character {
         AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(angleRadians));
         at.setToRotation(getAngleRadians() -90, x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
         g2d.setTransform(at);
-        g2d.drawImage(getCharacterImage(), x, y, null);
-        graphics.drawRect(x, y, getCharacterImage().getWidth(null), getCharacterImage().getHeight(null));
+//        g2d.drawImage(getCharacterImage(), x, y, null);
+        g2d.drawImage(getCharacterImage(), x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2, null);
+        graphics.drawRect(x, y, getCharacterImage().getWidth(null)*2, getCharacterImage().getHeight(null)*2);
         
         g2d.setTransform(olde);
         g2d.dispose();
 
     }
 
-    public Rectangle rectangle() {
+    public Rectangle hitBox() {
         return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null), getCharacterImage().getHeight(null));
     }
 //</editor-fold>

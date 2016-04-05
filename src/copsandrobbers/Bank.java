@@ -16,20 +16,26 @@ import java.awt.event.KeyEvent;
  * @author WyattCampbell
  */
 public class Bank {
+
     public Bank() {
-        this.image = ResourceTools.loadImageFromResource("images/Bank_Heist.png");
-        this.x = -1000;
-        this.y = -1000;
-        
+        this.image
+                = ResourceTools.loadImageFromResource("images/practice.png");
+//                ResourceTools.loadImageFromResource("images/Bank_Heist.png");
+        this.x = 0;
+//                -1000;
+        this.y = 0;
+//                -1000;
+
     }
 
     public void draw(Graphics graphics) {
-        graphics.drawImage(image, x, y, null);
-        graphics.drawRect(20,20,1309,700);
+        graphics.drawImage(image, x, y, image.getWidth(null) * 3, image.getHeight(null) * 3, null);
+//        graphics.drawRect(20, 20, 1309, 700);
     }
     private Image image;
     private int x;
     private int y;
+
     /**
      * @param image the image to set
      */
@@ -64,13 +70,16 @@ public class Bank {
     public void setY(int y) {
         this.y = y;
     }
-    public void moveLeft(){
+
+    public void moveLeft() {
         x = x - 1;
     }
-    public void moveRight(){
+
+    public void moveRight() {
         x = x + 1;
     }
-    public void mapBorder(){
-        new Rectangle(0, 0,1239,900);
+
+    public void mapBorder() {
+        new Rectangle(0, 0, 1239, 900);
     }
 }
