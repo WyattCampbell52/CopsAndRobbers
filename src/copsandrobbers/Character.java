@@ -12,6 +12,7 @@ import images.ImageManager;
 import images.ResourceTools;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -76,6 +77,7 @@ public class Character {
         velocity.y = 0;
     }
 //</editor-fold>
+    
 //<editor-fold defaultstate="collapsed" desc="Draw">
 
     public void draw(Graphics graphics) {
@@ -88,16 +90,32 @@ public class Character {
             graphics.setColor(Color.BLUE);
         }
 
-//        graphics.drawRect(getPosition().x, getPosition().y, 60, 90);
-        graphics.drawImage(getCharacterImage(), getX(), getY(), null);
+        graphics.drawRect(getX(), getY(), 60, 90);
+//        graphics.drawImage(getCharacterImage(), getX(), getY(), null);
 
 //        graphics.fillOval(getCenterOfMass().x, getCenterOfMass().y, 10, 10);
+        
+        
+        
+        Graphics2D g2d = (Graphics2D) graphics;
+        AffineTransform olde = g2d.getTransform();
+        
+        AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(angleRadians));
+        at.setToRotation(getAngleRadians() -90, x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
+        g2d.setTransform(at);
+        g2d.drawImage(getCharacterImage(), x, y, null);
+        graphics.drawRect(x, y, getCharacterImage().getWidth(null), getCharacterImage().getHeight(null));
+        
+        g2d.setTransform(olde);
+        g2d.dispose();
+
     }
 
     public Rectangle rectangle() {
         return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null), getCharacterImage().getHeight(null));
     }
 //</editor-fold>
+//
 //<editor-fold defaultstate="collapsed" desc="States">
 
     public void calmRun() {
