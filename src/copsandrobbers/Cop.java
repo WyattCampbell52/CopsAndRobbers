@@ -31,7 +31,7 @@ public class Cop {
 
         bulletCount = PRIMARY_BULLET_COUNT;
         magCount = 5;
-        setMode("assault");
+        mode = "assault";
         health = 1;
     }
 
@@ -155,7 +155,7 @@ public class Cop {
     }
 
     public Circle circle() {
-        return new Circle(image.getWidth(null) / 2, image.getHeight(null) / 2, image.getWidth(null) * 3);
+        return new Circle(x + image.getWidth(null) / 2, y+image.getHeight(null) / 2, image.getWidth(null) * 6);
     }
 
     /**
@@ -173,6 +173,10 @@ public class Cop {
     }
     public Point centreOfMass() {
         return new Point(x + (image.getWidth(null) / 2), y + (image.getHeight(null) / 2));
+    }
+    public void move() {
+        x += getVelocity().x;
+        y += getVelocity().y;
     }
 }
 //</editor-fold>

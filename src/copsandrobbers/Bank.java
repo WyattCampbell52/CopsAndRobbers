@@ -19,18 +19,14 @@ public class Bank {
 
     public Bank() {
         this.image
-                = ResourceTools.loadImageFromResource("images/practice.png");
-//                ResourceTools.loadImageFromResource("images/Bank_Heist.png");
-        this.x = 0;
-//                -1000;
-        this.y = 0;
-//                -1000;
+                = ResourceTools.loadImageFromResource("images/Bank_Heist_Map.png");
+        this.x = -400; //starting x
+        this.y = -2100; // starting y
 
     }
 
     public void draw(Graphics graphics) {
-        graphics.drawImage(image, x, y, image.getWidth(null) * 3, image.getHeight(null) * 3, null);
-//        graphics.drawRect(20, 20, 1309, 700);
+        graphics.drawImage(image, x, y, image.getWidth(null) * 6, image.getHeight(null) * 6, null);
     }
     private Image image;
     private int x;

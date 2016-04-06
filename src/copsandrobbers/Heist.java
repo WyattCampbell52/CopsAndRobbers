@@ -34,20 +34,20 @@ class Heist extends Environment {
 //    Robber robber;
     Character character;
     CrossHairs crossHairs;
-    private ArrayList<Projectile> bullet;
+    private ArrayList<Projectile> bullets;
     private ArrayList<Cop> cops;
     private Point mousePosition;
     int characterSpeed = 2;
 
     public Heist() {
-        character = new Character(0, 0, 0.0, CharacterType.RobberWolf);
+        character = new Character(650, 700, 0.0, CharacterType.RobberWolf);
         bank = new Bank();
-        bullet = new ArrayList<>();
+        bullets = new ArrayList<>();
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 mousePosition = e.getPoint();
-                character.setAngleRadians(TrigonometryCalculator.calculateAngle(character.centreOfMass(), mousePosition) + .75);
+                character.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(character.getX(), character.getY()), mousePosition) + .75);
                 repaint();
             }
         });
@@ -83,12 +83,17 @@ class Heist extends Environment {
     @Override
     public void timerTaskHandler() {
 
-        if (bullet != null) {
-            for (Projectile projectile : bullet) {
+        if (bullets != null) {
+            for (Projectile projectile : bullets) {
                 projectile.move();
             }
             if (character != null) {
                 character.move();
+            }
+            if (cops != null) {
+                for (Cop cop : cops) {
+                    cop.move();
+                }
             }
         }
         contact();
@@ -96,13 +101,13 @@ class Heist extends Environment {
 
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Contact">
+    //<editor-fold defaultstate="collapsed" desc="Contact and Assault">
     private void contact() {
-        if (bullet != null) {
+        if (bullets != null) {
             if (cops != null) {
                 ArrayList<Cop> toCopRemoves = new ArrayList<>();
                 ArrayList<Projectile> toBulletRemoves = new ArrayList<>();
-                for (Projectile projectile : bullet) {
+                for (Projectile projectile : bullets) {
                     for (Cop cop : cops) {
                         if (cop.hitBox().intersects(projectile.hitBox())) {
                             System.out.println("hit");
@@ -115,7 +120,7 @@ class Heist extends Environment {
                     }
                 }
                 cops.removeAll(toCopRemoves);
-                bullet.removeAll(toBulletRemoves);
+                bullets.removeAll(toBulletRemoves);
             }
         }
         if (character != null) {
@@ -124,14 +129,16 @@ class Heist extends Environment {
     }
 
     public void assault() {
-        if (bullet != null) {
-            if (cops != null) {
-                for (Projectile projectile : bullet) {
-                    for (Cop cop : cops) {
-                        if (cop.getMode() == "assault") {
-                            if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
-                                bullet.add(new Projectile(cop.centreOfMass(), TrigonometryCalculator.calculateVelocity(cop.centreOfMass(), character.centreOfMass(), 50), cop.getAngleRadians()));
-                            }
+        //if cop can see character, the shoot randomlyd
+
+        if ((cops != null) && (character != null)) {
+            for (Cop cop : cops) {
+//                if (cop.getMode() == "assault") {
+                if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
+                    if (Math.random() < .05) {
+                        if (bullets != null) {
+                            cop.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(cop.getX(), cop.getY()), character.centreOfMass()) + .75);
+                            bullets.add(new Projectile(cop.centreOfMass(), TrigonometryCalculator.calculateVelocity(cop.centreOfMass(), character.centreOfMass(), 50), cop.getAngleRadians()));
                         }
                     }
                 }
@@ -144,7 +151,7 @@ class Heist extends Environment {
     public void keyPressedHandler(KeyEvent e
     ) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
-            character.setVelocity(new Velocity(-characterSpeed, 0));
+            bank.setX(-characterSpeed);
             System.out.println(character.getX());
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             character.setVelocity(new Velocity(characterSpeed, 0));
@@ -158,22 +165,19 @@ class Heist extends Environment {
             addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
+                    character.mode = "Suspicious";
                     mousePosition = e.getPoint();
                     repaint();
                     crossHairs = new CrossHairs(mousePosition);
-                    character.mode = "Suspicious";
-
                 }
             });
         }
 
-        if (character.mode == "Engaging" || character.mode == "Suspicious") {
-            if (e.getKeyCode() == KeyEvent.VK_R) {
-                if (character.magCount > 0) {
-                    if (character.bulletCount < 25) {
-                        soundManager.play(RELOAD, 1);
-                        character.reload();
-                    }
+        if ((character.mode == "Engaging" || character.mode == "Suspicious") && e.getKeyCode() == KeyEvent.VK_R) {
+            if (character.magCount > 0) {
+                if (character.bulletCount < 9) {
+                    soundManager.play(RELOAD, 1);
+                    character.reload();
                 }
             }
         }
@@ -195,7 +199,7 @@ class Heist extends Environment {
     ) {
         if (character.bulletCount > 0 && character.mode == "Suspicious") {
             System.out.println("shot");
-            bullet.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 50), -character.getAngleRadians()));
+            bullets.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 50), -character.getAngleRadians()));
             character.bulletCount = character.bulletCount - 1;
             soundManager.play(SILENCESHOT, 1);
             soundManager.play(BULLETDROP, 1);
@@ -214,8 +218,8 @@ class Heist extends Environment {
         if (crossHairs != null) {
             crossHairs.draw(graphics);
         }
-        if (bullet != null) {
-            for (Projectile bulleting : bullet) {
+        if (bullets != null) {
+            for (Projectile bulleting : bullets) {
                 bulleting.draw(graphics);
             }
         }

@@ -23,23 +23,7 @@ import java.util.ArrayList;
  *
  * @author BBC132
  */
-public class Character {
-//<editor-fold defaultstate="collapsed" desc="Constructors">
-
-    private int x;
-    private int y;
-    private CharacterState state = CharacterState.CALM_STAND;
-    private CharacterType type = CharacterType.RobberWolf;
-//    private Image image;
-    private Animator animator;
-    private int speed;
-    private double angleRadians;
-    private int suspiciousMeter;
-    public int bulletCount;
-    public int magCount;
-    private Velocity velocity;
-    private int health;
-    public String mode;
+public class Character {    
     
 //<editor-fold defaultstate="collapsed" desc="Constructors">
 
@@ -55,16 +39,14 @@ public class Character {
         mode = "Concealed";
     }
 
-    //</editor-fold>
     public Character(int x, int y, double angleRadians, CharacterType type) {
+        this.x = x;
+        this.y = y;
         speed = 5;
         this.type = type;
         loadImages();
     }
-
-    public Point centreOfMass() {
-        return new Point(x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
-    }
+        //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Movement Methods">
     void move() {
@@ -89,10 +71,7 @@ public class Character {
         } else {
             graphics.setColor(Color.BLUE);
         }
-
-        graphics.drawRect(getX(), getY(), 60, 90);      
-        
-        
+                
         Graphics2D g2d = (Graphics2D) graphics;
         AffineTransform olde = g2d.getTransform();
         
@@ -112,7 +91,7 @@ public class Character {
         return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null), getCharacterImage().getHeight(null));
     }
 //</editor-fold>
-//
+    
 //<editor-fold defaultstate="collapsed" desc="States">
 
     public void calmRun() {
@@ -205,12 +184,27 @@ public class Character {
 //</editor-fold> 
     
 //<editor-fold defaultstate="collapsed" desc="property">
-
+    private int x;
+    private int y;
+    private CharacterState state = CharacterState.CALM_STAND;
+    private CharacterType type = CharacterType.RobberWolf;
+//    private Image image;
+    private Animator animator;
+    private int speed;
+    private double angleRadians;
+    private int suspiciousMeter;
+    public int bulletCount;
+    public int magCount;
+    private Velocity velocity;
+    private int health;
+    public String mode;
     /**
      * @return the x
      */
     /**
-     * @return the x
+     * @public Point centreOfMass() {
+        return new Point(x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
+    }return the x
      */
     public int getX() {
         return x;
@@ -357,6 +351,11 @@ public class Character {
     public CharacterType getType() {
         return type;
     }
+    
+    public Point centreOfMass() {
+        return new Point(x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
+    }
 
 //</editor-fold>
+    
 }
