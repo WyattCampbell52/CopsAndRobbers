@@ -18,6 +18,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import javafx.scene.shape.Circle;
 
 /**
  *
@@ -81,6 +82,7 @@ public class Character {
 //        g2d.drawImage(getCharacterImage(), x, y, null);
         g2d.drawImage(getCharacterImage(), x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2, null);
         graphics.drawRect(x, y, getCharacterImage().getWidth(null)*2, getCharacterImage().getHeight(null)*2);
+        graphics.drawRect(x, y, getCharacterImage().getWidth(null)*2, getCharacterImage().getHeight(null)*10);
         
         g2d.setTransform(olde);
         g2d.dispose();
@@ -354,6 +356,12 @@ public class Character {
     
     public Point centreOfMass() {
         return new Point(x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
+    }
+    public Circle circle() {
+        return new Circle(x + getCharacterImage().getWidth(null) / 2, y + getCharacterImage().getHeight(null) / 2, getCharacterImage().getWidth(null) * 6);
+    }
+    public Rectangle sight(){
+        return new Rectangle(x, y, getCharacterImage().getWidth(null)*2, getCharacterImage().getHeight(null)*10);
     }
 
 //</editor-fold>

@@ -5,10 +5,9 @@
         <group>
             <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/CrossHairs.java</file>
             <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Heist.java</file>
-            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Character.java</file>
             <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Bank.java</file>
-            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Cop.java</file>
-            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/images/practice.png</file>
+            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Character.java</file>
+            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Projectile.java</file>
         </group>
     </open-files>
 </project-private>

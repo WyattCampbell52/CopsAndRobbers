@@ -31,11 +31,10 @@ class Heist extends Environment {
 
     Bank bank;
     Projectile shoot;
-//    Robber robber;
     Character character;
     CrossHairs crossHairs;
     private ArrayList<Projectile> bullets;
-    private ArrayList<Cop> cops;
+    private ArrayList<Character> cops;
     private Point mousePosition;
     int characterSpeed = 2;
 
@@ -53,7 +52,7 @@ class Heist extends Environment {
         });
         setUpSound();
         cops = new ArrayList<>();
-        cops.add(new Cop(100, 200, PROPERTIES));
+        cops.add(new Character(100, 200, 0.0, CharacterType.CopWhiteBlackHair));
     }
 
     SoundManager soundManager;
@@ -91,10 +90,13 @@ class Heist extends Environment {
                 character.move();
             }
             if (cops != null) {
-                for (Cop cop : cops) {
-                    cop.move();
+                for (Character character : cops) {
+                    character.move();
                 }
             }
+        }
+        if (bank != null) {
+//            bank.move();
         }
         contact();
         assault();
@@ -105,17 +107,17 @@ class Heist extends Environment {
     private void contact() {
         if (bullets != null) {
             if (cops != null) {
-                ArrayList<Cop> toCopRemoves = new ArrayList<>();
+                ArrayList<Character> toCopRemoves = new ArrayList<>();
                 ArrayList<Projectile> toBulletRemoves = new ArrayList<>();
                 for (Projectile projectile : bullets) {
-                    for (Cop cop : cops) {
+                    for (Character cop : cops) {
                         if (cop.hitBox().intersects(projectile.hitBox())) {
                             System.out.println("hit");
                             toCopRemoves.add(cop);
                             toBulletRemoves.add(projectile);
                         }
                         if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
-                            cop.setMode("assault");
+
                         }
                     }
                 }
@@ -132,7 +134,7 @@ class Heist extends Environment {
         //if cop can see character, the shoot randomlyd
 
         if ((cops != null) && (character != null)) {
-            for (Cop cop : cops) {
+            for (Character cop : cops) {
 //                if (cop.getMode() == "assault") {
                 if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
                     if (Math.random() < .05) {
@@ -151,7 +153,8 @@ class Heist extends Environment {
     public void keyPressedHandler(KeyEvent e
     ) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
-            bank.setX(-characterSpeed);
+            character.setVelocity(new Velocity(-characterSpeed, 0));
+//            bank.setVelocity(new Velocity(-characterSpeed, 0));
             System.out.println(character.getX());
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             character.setVelocity(new Velocity(characterSpeed, 0));
@@ -224,7 +227,7 @@ class Heist extends Environment {
             }
         }
         if (cops != null) {
-            for (Cop cops : cops) {
+            for (Character cops : cops) {
                 cops.draw(graphics);
             }
         }
