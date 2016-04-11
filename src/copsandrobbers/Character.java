@@ -135,6 +135,7 @@ public class Character {
         images[4] = ResourceTools.loadImageFromResource("Character/Wolf_Unmasked.png.png");
         ImageManager imageManager = new ImageManager(imageNames, images);
         
+        
         animator = new Animator(imageManager, calmStandRobberDallasHolster, 200);
     }
     private Image getCharacterImage() {
