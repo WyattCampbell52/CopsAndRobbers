@@ -46,7 +46,7 @@ class Heist extends Environment {
             @Override
             public void mouseMoved(MouseEvent e) {
                 mousePosition = e.getPoint();
-                character.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(character.getX(), character.getY()), mousePosition) + .75);
+                character.setAngleRadians(TrigonometryCalculator.calculateAngle(character.centerOfMass(), mousePosition) + .75);
                 repaint();
             }
         });
@@ -140,7 +140,7 @@ class Heist extends Environment {
                     if (Math.random() < .05) {
                         if (bullets != null) {
                             cop.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(cop.getX(), cop.getY()), character.centreOfMass()) + .75);
-                            bullets.add(new Projectile(cop.centreOfMass(), TrigonometryCalculator.calculateVelocity(cop.centreOfMass(), character.centreOfMass(), 50), cop.getAngleRadians()));
+                            bullets.add(new Projectile(cop.centreOfMass(), TrigonometryCalculator.calculateVelocity(cop.centreOfMass(), character.centreOfMass(), 80), cop.getAngleRadians()));
                         }
                     }
                 }
@@ -202,7 +202,7 @@ class Heist extends Environment {
     ) {
         if (character.bulletCount > 0 && character.mode == "Suspicious") {
             System.out.println("shot");
-            bullets.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 50), -character.getAngleRadians()));
+            bullets.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 80), -character.getAngleRadians()));
             character.bulletCount = character.bulletCount - 1;
             soundManager.play(SILENCESHOT, 1);
             soundManager.play(BULLETDROP, 1);
@@ -227,8 +227,8 @@ class Heist extends Environment {
             }
         }
         if (cops != null) {
-            for (Character cops : cops) {
-                cops.draw(graphics);
+            for (Character cop : cops) {
+                cop.draw(graphics);
             }
         }
         if (character != null) {

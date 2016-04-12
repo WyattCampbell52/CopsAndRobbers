@@ -24,10 +24,9 @@ import javafx.scene.shape.Circle;
  *
  * @author BBC132
  */
-public class Character {    
-    
-//<editor-fold defaultstate="collapsed" desc="Constructors">
+public class Character {
 
+//<editor-fold defaultstate="collapsed" desc="Constructors">
     {
         x = 0;
         y = 0;
@@ -47,7 +46,7 @@ public class Character {
         this.type = type;
         loadImages();
     }
-        //</editor-fold>
+    //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="Movement Methods">
     void move() {
@@ -60,9 +59,8 @@ public class Character {
         velocity.y = 0;
     }
 //</editor-fold>
-    
-//<editor-fold defaultstate="collapsed" desc="Draw">
 
+//<editor-fold defaultstate="collapsed" desc="Draw">
     public void draw(Graphics graphics) {
 //        AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(angleRadians));
 //        at.setToRotation(getAngleRadians() - 90, x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
@@ -72,30 +70,33 @@ public class Character {
         } else {
             graphics.setColor(Color.BLUE);
         }
-                
+
         Graphics2D g2d = (Graphics2D) graphics;
         AffineTransform olde = g2d.getTransform();
-        
+
         AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(angleRadians));
-        at.setToRotation(getAngleRadians() -90, x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
+        at.setToRotation(getAngleRadians() - 90, x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
         g2d.setTransform(at);
 //        g2d.drawImage(getCharacterImage(), x, y, null);
         g2d.drawImage(getCharacterImage(), x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2, null);
-        graphics.drawRect(x, y, getCharacterImage().getWidth(null)*2, getCharacterImage().getHeight(null)*2);
-        graphics.drawRect(x, y, getCharacterImage().getWidth(null)*2, getCharacterImage().getHeight(null)*10);
-        
-        g2d.setTransform(olde);
-        g2d.dispose();
+        graphics.drawRect(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2);
+        graphics.drawRect(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 10);
 
+        g2d.setTransform(olde);
+//        g2d.dispose();
+
+    }
+
+    public Point centerOfMass() {
+        return new Point(x + getCharacterImage().getWidth(null) / 2, y + getCharacterImage().getHeight(null) / 2);
     }
 
     public Rectangle hitBox() {
         return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null), getCharacterImage().getHeight(null));
     }
 //</editor-fold>
-    
-//<editor-fold defaultstate="collapsed" desc="States">
 
+//<editor-fold defaultstate="collapsed" desc="States">
     public void calmRun() {
         setState(CharacterState.CALM_RUN);
     }
@@ -116,7 +117,7 @@ public class Character {
         return ((state != CharacterState.DEAD));
     }
 //</editor-fold>
-    
+
 //<editor-fold defaultstate="collapsed" desc="Images">
     private static String COP_WHITE_BLACKHAIR_Holster_STANDING = "COP_WHITE_BLACKHAIR_Holster_STANDING";
 
@@ -134,9 +135,8 @@ public class Character {
     private final static ArrayList<String> calmStandRobberWolfHolster = new ArrayList<>();
     private final static ArrayList<String> calmStandRobberChainsHolster = new ArrayList<>();
 //</editor-fold>
-    
-//<editor-fold defaultstate="collapsed" desc="Other Methods">
 
+//<editor-fold defaultstate="collapsed" desc="Other Methods">
     public boolean reload() {
         if (magCount > 0) {
             magCount--;
@@ -166,14 +166,14 @@ public class Character {
         String[] imageNames = {COP_WHITE_BLACKHAIR_Holster_STANDING, ROBBER_DALLAS_Holster_STANDING,
             ROBBER_HOXTON_Holster_STANDING, ROBBER_WOLF_Holster_STANDING,
             ROBBER_CHAINS_Holster_STANDING};
-        
+
         Image[] images = new Image[5];
         images[0] = ResourceTools.loadImageFromResource("images/White_Guard_HairBlack_One.png");
         images[1] = ResourceTools.loadImageFromResource("images/Dallas_Unmasked.png");
         images[2] = ResourceTools.loadImageFromResource("images/Chains_Unmasked.png");
         images[3] = ResourceTools.loadImageFromResource("images/Hoxton_Unmasked.png");
         images[4] = ResourceTools.loadImageFromResource("images/Wolf_Unmasked.png");
-        
+
         ImageManager imageManager = new ImageManager(imageNames, images);
 
         animator = new Animator(imageManager, calmStandRobberDallasHolster, 200);
@@ -184,7 +184,7 @@ public class Character {
         return animator.getCurrentImage();
     }
 //</editor-fold> 
-    
+
 //<editor-fold defaultstate="collapsed" desc="property">
     private int x;
     private int y;
@@ -200,14 +200,6 @@ public class Character {
     private Velocity velocity;
     private int health;
     public String mode;
-    /**
-     * @return the x
-     */
-    /**
-     * @public Point centreOfMass() {
-        return new Point(x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
-    }return the x
-     */
     public int getX() {
         return x;
     }
@@ -353,17 +345,18 @@ public class Character {
     public CharacterType getType() {
         return type;
     }
-    
+
     public Point centreOfMass() {
         return new Point(x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
     }
+
     public Circle circle() {
         return new Circle(x + getCharacterImage().getWidth(null) / 2, y + getCharacterImage().getHeight(null) / 2, getCharacterImage().getWidth(null) * 6);
     }
-    public Rectangle sight(){
-        return new Rectangle(x, y, getCharacterImage().getWidth(null)*2, getCharacterImage().getHeight(null)*10);
+
+    public Rectangle sight() {
+        return new Rectangle(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 10);
     }
 
 //</editor-fold>
-    
 }
