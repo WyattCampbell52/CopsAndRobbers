@@ -70,8 +70,6 @@ public class Character {
         } else {
             graphics.setColor(Color.BLUE);
         }
-
-        graphics.drawRect(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2);
         
         Graphics2D g2d = (Graphics2D) graphics;
         AffineTransform olde = g2d.getTransform();
@@ -373,9 +371,10 @@ public class Character {
     }
     
     public void border(Rectangle rectangle){
-        if (rectangle.intersects(imageTop())) {
-            
+        if (rectangle.intersects(imageTop()) || rectangle.intersects(imageBottom()) || rectangle.intersects(imageRight()) || rectangle.intersects(imageLeft()) ) {
+            setVelocity(new Velocity(0, 0));
         }
+        
     }
 //</editor-fold>
 }

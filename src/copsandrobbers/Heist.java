@@ -91,15 +91,17 @@ class Heist extends Environment {
             }
             if (character != null) {
                 character.move();
+                for (Rectangle boundary : bank.boundries) {
+//                    character.border(boundary);
+                }
+                character.move();
+
             }
             if (cops != null) {
                 for (Character character : cops) {
                     character.move();
                 }
             }
-        }
-        if (bank != null) {
-            
         }
         contact();
         assault();
@@ -123,6 +125,11 @@ class Heist extends Environment {
                             character.danger("visible");
                         }
                     }
+                    for (Rectangle boundary : bank.boundries) {
+                        if (boundary.intersects(projectile.hitBox())) {
+                            toBulletRemoves.add(projectile);
+                        }
+                    }
                 }
                 cops.removeAll(toCopRemoves);
                 bullets.removeAll(toBulletRemoves);
@@ -138,12 +145,13 @@ class Heist extends Environment {
 
         if ((cops != null) && (character != null)) {
             for (Character cop : cops) {
-//                if (cop.getMode() == "assault") {
-                if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
-                    if (Math.random() < .05) {
-                        if (bullets != null) {
-                            cop.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(cop.getX(), cop.getY()), character.centreOfMass()) + .75);
-                            bullets.add(new Projectile(cop.centreOfMass(), TrigonometryCalculator.calculateVelocity(cop.centreOfMass(), character.centreOfMass(), 80), cop.getAngleRadians()));
+                if (character.mode == "assault") {
+                    if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
+                        if (Math.random() < .05) {
+                            if (bullets != null) {
+                                cop.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(cop.getX(), cop.getY()), character.centreOfMass()) + .75);
+                                bullets.add(new Projectile(cop.centreOfMass(), TrigonometryCalculator.calculateVelocity(cop.centreOfMass(), character.centreOfMass(), 80), cop.getAngleRadians()));
+                            }
                         }
                     }
                 }
@@ -211,8 +219,7 @@ class Heist extends Environment {
     }
 
     @Override
-    public void paintEnvironment(Graphics graphics
-    ) {
+    public void paintEnvironment(Graphics graphics) {
         if (bank != null) {
             bank.draw(graphics);
             graphics.drawString("Bullets" + character.bulletCount + "/" + character.magCount, 300, 300);
