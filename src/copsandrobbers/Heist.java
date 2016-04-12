@@ -20,6 +20,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javafx.scene.shape.Shape;
+import javax.lang.model.type.TypeKind;
 import path.TrigonometryCalculator;
 
 /**
@@ -36,6 +38,7 @@ class Heist extends Environment {
     private ArrayList<Projectile> bullets;
     private ArrayList<Character> cops;
     private Point mousePosition;
+    private Point wall;
     int characterSpeed = 2;
 
     public Heist() {
@@ -96,7 +99,7 @@ class Heist extends Environment {
             }
         }
         if (bank != null) {
-//            bank.move();
+            
         }
         contact();
         assault();
@@ -117,7 +120,7 @@ class Heist extends Environment {
                             toBulletRemoves.add(projectile);
                         }
                         if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
-
+                            character.danger("visible");
                         }
                     }
                 }
@@ -150,15 +153,11 @@ class Heist extends Environment {
 //</editor-fold>
 
     @Override
-    public void keyPressedHandler(KeyEvent e
-    ) {
+    public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
             character.setVelocity(new Velocity(-characterSpeed, 0));
-//            bank.setVelocity(new Velocity(-characterSpeed, 0));
-            System.out.println(character.getX());
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             character.setVelocity(new Velocity(characterSpeed, 0));
-
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
             character.setVelocity(new Velocity(0, -characterSpeed));
         } else if (e.getKeyCode() == KeyEvent.VK_S) {

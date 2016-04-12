@@ -140,7 +140,7 @@ public class Bank {
     private int x;
     private int y;
     private Velocity velocity;
-    private ArrayList<Rectangle> boundries;
+    public final ArrayList<Rectangle> boundries;
 
     /**
      * @param image the image to set

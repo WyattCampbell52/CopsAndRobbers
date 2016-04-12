@@ -71,6 +71,8 @@ public class Character {
             graphics.setColor(Color.BLUE);
         }
 
+        graphics.drawRect(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2);
+        
         Graphics2D g2d = (Graphics2D) graphics;
         AffineTransform olde = g2d.getTransform();
 
@@ -179,7 +181,7 @@ public class Character {
         animator = new Animator(imageManager, calmStandRobberDallasHolster, 200);
     }
 
-    private Image getCharacterImage() {
+    public Image getCharacterImage() {
 //        return image;
         return animator.getCurrentImage();
     }
@@ -357,6 +359,23 @@ public class Character {
     public Rectangle sight() {
         return new Rectangle(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 10);
     }
-
+    public Rectangle imageTop(){
+        return new Rectangle(x, y, getCharacterImage().getWidth(null), 1);
+    }
+    public Rectangle imageRight(){
+        return new Rectangle(x + getCharacterImage().getWidth(null), y, 1, getCharacterImage().getHeight(null));
+    }
+    public Rectangle imageLeft(){
+        return new Rectangle(x, y, 1, getCharacterImage().getHeight(null));
+    }
+    public Rectangle imageBottom(){
+        return new Rectangle(x, y + getCharacterImage().getHeight(null) - 1, getCharacterImage().getWidth(null), 1);
+    }
+    
+    public void border(Rectangle rectangle){
+        if (rectangle.intersects(imageTop())) {
+            
+        }
+    }
 //</editor-fold>
 }
