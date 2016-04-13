@@ -91,8 +91,10 @@ class Heist extends Environment {
             }
             if (character != null) {
                 character.move();
+                if (bank != null) {
                 for (Rectangle boundary : bank.boundries) {
-//                    character.border(boundary);
+                    character.border(boundary);
+                }
                 }
                 character.move();
 
@@ -126,7 +128,7 @@ class Heist extends Environment {
                         }
                     }
                     for (Rectangle boundary : bank.boundries) {
-                        if (boundary.intersects(projectile.hitBox())) {
+                        if (projectile.hitBox().intersects(boundary)) {
                             toBulletRemoves.add(projectile);
                         }
                     }

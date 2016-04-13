@@ -31,7 +31,7 @@ public class Bank {
 
         //<editor-fold defaultstate="collapsed" desc="Boundries">
         boundries = new ArrayList<>();
-        boundries.add(new Rectangle(x, y, image.getWidth(null) * 6, image.getHeight(null) * 6)); // map boundary
+//        boundries.add(new Rectangle(x, y, image.getWidth(null) * 6, image.getHeight(null) * 6)); // map boundary
         boundries.add(new Rectangle(x + 325, y + 1595, 820, 18)); // main room north wall left
         boundries.add(new Rectangle(x + 1290, y + 1543, 385, 70)); // main room north wall right
         boundries.add(new Rectangle(x + 324, y + 372, 18, 2441)); // main room west wall plus empty wall

@@ -92,7 +92,7 @@ public class Character {
     }
 
     public Rectangle hitBox() {
-        return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null), getCharacterImage().getHeight(null));
+        return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null) *2, getCharacterImage().getHeight(null) *2);
     }
 //</editor-fold>
 
@@ -371,7 +371,7 @@ public class Character {
     }
     
     public void border(Rectangle rectangle){
-        if (rectangle.intersects(imageTop()) || rectangle.intersects(imageBottom()) || rectangle.intersects(imageRight()) || rectangle.intersects(imageLeft()) ) {
+        if (rectangle.intersects(hitBox()) ) {
             setVelocity(new Velocity(0, 0));
         }
         
