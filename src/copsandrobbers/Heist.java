@@ -40,7 +40,7 @@ class Heist extends Environment {
     int characterSpeed = 2;
 
     public Heist() {
-        character = new Character(0, 0, 0.0, CharacterType.RobberWolf);
+        character = new Character(0, 0, 0.0, CharacterType.RobberChains);
         bank = new Bank();
 //        robber = new Robber(0, 0, 0.0);
         bullet = new ArrayList<>();
