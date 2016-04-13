@@ -65,10 +65,16 @@ public class Character {
 //        AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(angleRadians));
 //        at.setToRotation(getAngleRadians() - 90, x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
 
-        if (getType() == CharacterType.RobberWolf) {
+        if (getType() == CharacterType.RobberDallas) {
             graphics.setColor(Color.RED);
-        } else {
+        }        if (getType() == CharacterType.RobberWolf) {
             graphics.setColor(Color.BLUE);
+        }        if (getType() == CharacterType.RobberHoxton) {
+            graphics.setColor(Color.GREEN);
+        }        if (getType() == CharacterType.RobberChains) {
+            graphics.setColor(Color.BLACK);
+        } else {
+            graphics.setColor(Color.WHITE);
         }
         
         Graphics2D g2d = (Graphics2D) graphics;
@@ -170,13 +176,26 @@ public class Character {
         Image[] images = new Image[5];
         images[0] = ResourceTools.loadImageFromResource("images/White_Guard_HairBlack_One.png");
         images[1] = ResourceTools.loadImageFromResource("images/Dallas_Unmasked.png");
-        images[2] = ResourceTools.loadImageFromResource("images/Chains_Unmasked.png");
-        images[3] = ResourceTools.loadImageFromResource("images/Hoxton_Unmasked.png");
-        images[4] = ResourceTools.loadImageFromResource("images/Wolf_Unmasked.png");
+        images[2] = ResourceTools.loadImageFromResource("images/Hoxton_Unmasked.png");
+        images[3] = ResourceTools.loadImageFromResource("images/Wolf_Unmasked.png");
+        images[4] = ResourceTools.loadImageFromResource("images/Chains_Unmasked.png");
 
         ImageManager imageManager = new ImageManager(imageNames, images);
+        if (getType() == CharacterType.RobberDallas) {
+            animator = new Animator(imageManager, calmStandRobberDallasHolster, 200);
+        } else if (getType() == CharacterType.RobberWolf) {
+            animator = new Animator(imageManager, calmStandRobberWolfHolster, 200);
+        }else if (getType() == CharacterType.RobberChains) {
+            animator = new Animator(imageManager, calmStandRobberChainsHolster, 200);
+        }else if (getType() == CharacterType.CopWhiteBlackHair) {
+            animator = new Animator(imageManager, calmStandCopWhiteBlackHairHolster, 200);
+        }else if (getType() == CharacterType.RobberHoxton) {
+            animator = new Animator(imageManager, calmStandRobberHoxtonHolster, 200);
+        }else{
+            animator = new Animator(imageManager, calmStandCopWhiteBlackHairHolster, 200);
 
-        animator = new Animator(imageManager, calmStandRobberDallasHolster, 200);
+        }
+
     }
 
     public Image getCharacterImage() {
