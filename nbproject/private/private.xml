@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/images/Black_Guard_Bald_Four.png</file>
-            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/images/Bank_Heist.png</file>
-            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/images/Bank_Heist_Preview.png</file>
-            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/images/Wolf_Unmasked.png</file>
-            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/images/Black_Guard_Bald_Two.png</file>
+            <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Bank.java</file>
+            <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/CharacterState.java</file>
+            <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/CopsAndRobbers.java</file>
+            <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Cop.java</file>
+            <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Heist.java</file>
         </group>
->>>>>>> origin/wyatt-pictures-01
     </open-files>
 </project-private>
