@@ -20,6 +20,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javafx.scene.shape.Shape;
+import javax.lang.model.type.TypeKind;
 import path.TrigonometryCalculator;
 
 /**
@@ -31,33 +33,31 @@ class Heist extends Environment {
 
     Bank bank;
     Projectile shoot;
-//    Robber robber;
     Character character;
     CrossHairs crossHairs;
-    private ArrayList<Projectile> bullet;
-    private ArrayList<Cop> cops;
+    private ArrayList<Projectile> bullets;
+    private ArrayList<Character> cops;
     private Point mousePosition;
+    private Point wall;
     int characterSpeed = 2;
 
     public Heist() {
-        character = new Character(0, 0, 0.0, CharacterType.RobberWolf);
+        character = new Character(650, 700, 0.0, CharacterType.RobberWolf);
         bank = new Bank();
-//        robber = new Robber(0, 0, 0.0);
-        bullet = new ArrayList<>();
+        bullets = new ArrayList<>();
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 mousePosition = e.getPoint();
-//                robber.setAngleRadians(TrigonometryCalculator.calculateAngle(robber.centreOfMass(), mousePosition) + .75);
-                character.setAngleRadians(TrigonometryCalculator.calculateAngle(character.centreOfMass(), mousePosition) + .75);
+                character.setAngleRadians(TrigonometryCalculator.calculateAngle(character.centerOfMass(), mousePosition) + .75);
                 repaint();
             }
         });
         setUpSound();
         cops = new ArrayList<>();
-        cops.add(new Cop(100, 200, PROPERTIES));
+        cops.add(new Character(100, 200, 0.0, CharacterType.CopWhiteBlackHair));
     }
-    
+
     SoundManager soundManager;
     public static final String RELOAD = "Relaod";
     public static final String EMPTYCLIP = "Empty Clip";
@@ -84,144 +84,138 @@ class Heist extends Environment {
 
     @Override
     public void timerTaskHandler() {
-        
-//            if (robber != null) {
-//                robber.move();
-//        }
-            contact();
+
+        if (bullets != null) {
+            for (Projectile projectile : bullets) {
+                projectile.move();
+            }
+            if (character != null) {
+                character.move();
+                if (bank != null) {
+                for (Rectangle boundary : bank.boundries) {
+                    character.border(boundary);
+                }
+                }
+                character.move();
+
+            }
+            if (cops != null) {
+                for (Character character : cops) {
+                    character.move();
+                }
+            }
+        }
+        contact();
+        assault();
+
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Contact">
+    //<editor-fold defaultstate="collapsed" desc="Contact and Assault">
     private void contact() {
-        if (bullet != null) {
+        if (bullets != null) {
             if (cops != null) {
-                ArrayList<Cop> toCopRemoves = new ArrayList<>();
+                ArrayList<Character> toCopRemoves = new ArrayList<>();
                 ArrayList<Projectile> toBulletRemoves = new ArrayList<>();
-                for (Projectile projectile : bullet) {
-                    for (Cop cop : cops) {
+                for (Projectile projectile : bullets) {
+                    for (Character cop : cops) {
                         if (cop.hitBox().intersects(projectile.hitBox())) {
                             System.out.println("hit");
                             toCopRemoves.add(cop);
                             toBulletRemoves.add(projectile);
                         }
-                        cops.removeAll(toCopRemoves);
-                        bullet.removeAll(toBulletRemoves);
+                        if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
+                            character.danger("visible");
+                        }
+                    }
+                    for (Rectangle boundary : bank.boundries) {
+                        if (projectile.hitBox().intersects(boundary)) {
+                            toBulletRemoves.add(projectile);
+                        }
+                    }
+                }
+                cops.removeAll(toCopRemoves);
+                bullets.removeAll(toBulletRemoves);
+            }
+        }
+        if (character != null) {
+            character.move();
+        }
+    }
+
+    public void assault() {
+        //if cop can see character, the shoot randomlyd
+
+        if ((cops != null) && (character != null)) {
+            for (Character cop : cops) {
+                if (character.mode == "assault") {
+                    if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
+                        if (Math.random() < .05) {
+                            if (bullets != null) {
+                                cop.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(cop.getX(), cop.getY()), character.centreOfMass()) + .75);
+                                bullets.add(new Projectile(cop.centreOfMass(), TrigonometryCalculator.calculateVelocity(cop.centreOfMass(), character.centreOfMass(), 80), cop.getAngleRadians()));
+                            }
+                        }
                     }
                 }
             }
         }
-//<<<<<<< HEAD
-//        if (robber != null) {
-//            robber.move();
-//        }
-        if (character != null) {
-            character.move();
-        }
-//=======
-//>>>>>>> origin/wyatt-pictures-01
     }
 //</editor-fold>
 
     @Override
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
-//            robber.move(-1,0);
-//<<<<<<< HEAD
             character.setVelocity(new Velocity(-characterSpeed, 0));
-//            direction = "Left";
-            System.out.println(character.getX());
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
-//            robber.move(1,0);
             character.setVelocity(new Velocity(characterSpeed, 0));
-//            direction = "Right";
-            System.out.println(character.getX());
-//=======
-//            robber.setVelocity(new Velocity(-robberSpeed, 0));
-//            System.out.println(robber.getX());
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-//            robber.move(1,0);
-//            robber.setVelocity(new Velocity(robberSpeed, 0));
-//            System.out.println(robber.getX());
-//>>>>>>> origin/wyatt-pictures-01
-
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
-//            robber.move(0,-1);
             character.setVelocity(new Velocity(0, -characterSpeed));
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
-//            robber.move(0,1);
             character.setVelocity(new Velocity(0, characterSpeed));
         }
-//        bulleting for now
         if (e.getKeyCode() == KeyEvent.VK_G || character.mode == "Engaging") {
             addMouseMotionListener(new MouseAdapter() {
-//                robber.setImage();
                 @Override
                 public void mouseMoved(MouseEvent e) {
+                    character.mode = "Suspicious";
                     mousePosition = e.getPoint();
                     repaint();
-//                    System.out.println("Angle = " + TrigonometryCalculator.calculateAngle(robber.centreOfMass(), e.getPoint()) + " radians");
                     crossHairs = new CrossHairs(mousePosition);
-                    character.mode = "Suspicious";
                 }
             });
         }
 
-//<<<<<<< HEAD
-        if (character.mode == "Engaging" || character.mode == "Suspicious") {
-            if (e.getKeyCode() == KeyEvent.VK_R) {
-                if (character.magCount > 0) {
-                    if (character.bulletCount < 25) {
-                        soundManager.play(RELOAD, 1);
-                        character.reload();
-//=======
-//        if (robber.mode == "Engaging" || robber.mode == "Suspicious") {
-//            if (e.getKeyCode() == KeyEvent.VK_R) {
-//                if (robber.magCount > 0) {
-//                    if (robber.bulletCount < 25) {
-//                        soundManager.play(RELOAD, 1);
-//                        robber.reload();
-//>>>>>>> origin/wyatt-pictures-01
-                    }
+        if ((character.mode == "Engaging" || character.mode == "Suspicious") && e.getKeyCode() == KeyEvent.VK_R) {
+            if (character.magCount > 0) {
+                if (character.bulletCount < 9) {
+                    soundManager.play(RELOAD, 1);
+                    character.reload();
                 }
             }
         }
     }
 
     @Override
-    public void keyReleasedHandler(KeyEvent e) {
+    public void keyReleasedHandler(KeyEvent e
+    ) {
         if ((e.getKeyCode() == KeyEvent.VK_A)
                 || (e.getKeyCode() == KeyEvent.VK_D)
                 || (e.getKeyCode() == KeyEvent.VK_W)
                 || (e.getKeyCode() == KeyEvent.VK_S)) {
             character.stop();
-//            robber.setVelocity(new Velocity(0, 0));
         }
     }
 
     @Override
-    public void environmentMouseClicked(MouseEvent e) {
-//        if (robber.bulletCount > 0 && robber.mode == "Suspicious") {
-//            System.out.println("shot");
-//            bullet.add(new Projectile(robber.centreOfMass(), TrigonometryCalculator.calculateVelocity(robber.centreOfMass(), mousePosition, 50), -robber.getAngleRadians()));
-//            robber.bulletCount = robber.bulletCount - 1;
-//            soundManager.play(SILENCESHOT, 1);
-//                soundManager.play(BULLETDROP, 1);
-//            
-//        } else if (robber.bulletCount == 0) {
-//            soundManager.play(EMPTYCLIP, 1);
-//        }
+    public void environmentMouseClicked(MouseEvent e
+    ) {
         if (character.bulletCount > 0 && character.mode == "Suspicious") {
             System.out.println("shot");
-            bullet.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 50), -character.getAngleRadians()));
+            bullets.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 80), -character.getAngleRadians()));
             character.bulletCount = character.bulletCount - 1;
             soundManager.play(SILENCESHOT, 1);
             soundManager.play(BULLETDROP, 1);
-
-//<<<<<<< HEAD
         } else if (character.bulletCount == 0) {
-//=======
-//        } else if (robber.bulletCount == 0) {
-//>>>>>>> origin/wyatt-pictures-01
             soundManager.play(EMPTYCLIP, 1);
         }
     }
@@ -235,19 +229,16 @@ class Heist extends Environment {
         if (crossHairs != null) {
             crossHairs.draw(graphics);
         }
-        if (bullet != null) {
-            for (Projectile bulleting : bullet) {
+        if (bullets != null) {
+            for (Projectile bulleting : bullets) {
                 bulleting.draw(graphics);
             }
         }
         if (cops != null) {
-            for (Cop cops : cops) {
-                cops.draw(graphics);
+            for (Character cop : cops) {
+                cop.draw(graphics);
             }
         }
-//        if (robber != null) {
-//            robber.draw(graphics);
-//        }
         if (character != null) {
             character.draw(graphics);
         }

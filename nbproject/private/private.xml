@@ -2,11 +2,19 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Bank.java</file>
             <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/CharacterState.java</file>
             <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/CopsAndRobbers.java</file>
             <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Cop.java</file>
             <file>file:/Users/raviraina/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Heist.java</file>
+=======
+            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/CrossHairs.java</file>
+            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Heist.java</file>
+            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Bank.java</file>
+            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Character.java</file>
+            <file>file:/Users/WyattCampbell/NetBeansProjects/CopsAndRobbers/src/copsandrobbers/Projectile.java</file>
+>>>>>>> origin/master
         </group>
     </open-files>
 </project-private>
