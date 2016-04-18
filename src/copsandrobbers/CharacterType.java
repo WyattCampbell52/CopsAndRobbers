@@ -10,5 +10,5 @@ package copsandrobbers;
  * @author BBC132
  */
 public enum CharacterType {
-    RobberDallas, RobberHoxton, RobberWolf, RobberChains, CopWhiteBlackHair
+    RobberDallas, RobberHouston, RobberWolf, RobberChains, CopWhiteBlackHair
 }
