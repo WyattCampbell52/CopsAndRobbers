@@ -67,16 +67,20 @@ public class Character {
 
         if (getType() == CharacterType.RobberDallas) {
             graphics.setColor(Color.RED);
-        }        if (getType() == CharacterType.RobberWolf) {
+        }
+        if (getType() == CharacterType.RobberWolf) {
             graphics.setColor(Color.BLUE);
-        }        if (getType() == CharacterType.RobberHouston) {
+        }
+        if (getType() == CharacterType.RobberHouston) {
+
             graphics.setColor(Color.GREEN);
-        }        if (getType() == CharacterType.RobberChains) {
+        }
+        if (getType() == CharacterType.RobberChains) {
             graphics.setColor(Color.BLACK);
         } else {
             graphics.setColor(Color.WHITE);
         }
-        
+
         Graphics2D g2d = (Graphics2D) graphics;
         AffineTransform olde = g2d.getTransform();
 
@@ -85,12 +89,10 @@ public class Character {
         g2d.setTransform(at);
 //        g2d.drawImage(getCharacterImage(), x, y, null);
         g2d.drawImage(getCharacterImage(), x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2, null);
-        graphics.drawRect(x+67, y+60, getCharacterImage().getWidth(null)/2 +20, getCharacterImage().getHeight(null)-30);
-        graphics.drawRect(x+67, y+60, getCharacterImage().getWidth(null)/2 +20, getCharacterImage().getHeight(null) * 4);
+        graphics.drawRect(x + 67, y + 60, getCharacterImage().getWidth(null) / 2 + 20, getCharacterImage().getHeight(null) - 30);
+        graphics.drawRect(x + 67, y + 60, getCharacterImage().getWidth(null) / 2 + 20, getCharacterImage().getHeight(null) * 4);
 
         g2d.setTransform(olde);
-//        g2d.dispose();
-
     }
 
     public Point centerOfMass() {
@@ -98,7 +100,7 @@ public class Character {
     }
 
     public Rectangle hitBox() {
-        return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null), getCharacterImage().getHeight(null));
+        return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2);
     }
 //</editor-fold>
 
@@ -185,22 +187,25 @@ public class Character {
             animator = new Animator(imageManager, calmStandRobberDallasHolster, 200);
         } else if (getType() == CharacterType.RobberWolf) {
             animator = new Animator(imageManager, calmStandRobberWolfHolster, 200);
-        }else if (getType() == CharacterType.RobberChains) {
+        } else if (getType() == CharacterType.RobberChains) {
             animator = new Animator(imageManager, calmStandRobberChainsHolster, 200);
-        }else if (getType() == CharacterType.CopWhiteBlackHair) {
+        } else if (getType() == CharacterType.CopWhiteBlackHair) {
             animator = new Animator(imageManager, calmStandCopWhiteBlackHairHolster, 200);
-        }else if (getType() == CharacterType.RobberHouston) {
+        
+        } else if (getType() == CharacterType.RobberHouston) {
             animator = new Animator(imageManager, calmStandRobberHoustonHolster, 200);
-        }else{
-            animator = new Animator(imageManager, calmStandCopWhiteBlackHairHolster, 200);
-
-        }
+        } else {
+                    animator = new Animator(imageManager, calmStandCopWhiteBlackHairHolster, 200);
+                }
 
     }
 
     public Image getCharacterImage() {
-//        return image;
-        return animator.getCurrentImage();
+        if (animator != null) {
+            return animator.getCurrentImage();
+        } else {
+            return null;
+        }
     }
 //</editor-fold> 
 
@@ -209,6 +214,7 @@ public class Character {
     private int y;
     private CharacterState state = CharacterState.CALM_STAND;
     private CharacterType type = CharacterType.RobberWolf;
+    private CharacterMovement direction;
 //    private Image image;
     private Animator animator;
     private int speed;
@@ -219,6 +225,7 @@ public class Character {
     private Velocity velocity;
     private int health;
     public String mode;
+
     public int getX() {
         return x;
     }
@@ -321,29 +328,27 @@ public class Character {
                     } else {
                         animator.setImageNames(calmStandCopWhiteBlackHairHolster);
                     }
-                }
-                if (getType() == CharacterType.RobberDallas) {
+                } else if (getType() == CharacterType.RobberDallas) {
                     if (state == CharacterState.CALM_STAND) {
                         animator.setImageNames(calmStandRobberDallasHolster);
                     } else {
                         animator.setImageNames(calmStandRobberDallasHolster);
                     }
-                }
-                if (getType() == CharacterType.RobberChains) {
+                } else if (getType() == CharacterType.RobberChains) {
                     if (state == CharacterState.CALM_STAND) {
                         animator.setImageNames(calmStandRobberChainsHolster);
                     } else {
                         animator.setImageNames(calmStandRobberChainsHolster);
-                    }
+                    }                
                 }
                 if (getType() == CharacterType.RobberHouston) {
+                     
                     if (state == CharacterState.CALM_STAND) {
                         animator.setImageNames(calmStandRobberHoustonHolster);
                     } else {
                         animator.setImageNames(calmStandRobberHoustonHolster);
                     }
-                }
-                if (getType() == CharacterType.RobberWolf) {
+                } else if (getType() == CharacterType.RobberWolf) {
                     if (state == CharacterState.CALM_STAND) {
                         animator.setImageNames(calmStandRobberWolfHolster);
                     } else {
@@ -351,11 +356,9 @@ public class Character {
                     }
                 } else {
                     animator.setImageNames(calmStandRobberWolfHolster);
-
                 }
             }
         }
-
     }
 
     /**
@@ -376,24 +379,19 @@ public class Character {
     public Rectangle sight() {
         return new Rectangle(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 10);
     }
-    public Rectangle imageTop(){
-        return new Rectangle(x, y, getCharacterImage().getWidth(null), 1);
-    }
-    public Rectangle imageRight(){
-        return new Rectangle(x + getCharacterImage().getWidth(null), y, 1, getCharacterImage().getHeight(null));
-    }
-    public Rectangle imageLeft(){
-        return new Rectangle(x, y, 1, getCharacterImage().getHeight(null));
-    }
-    public Rectangle imageBottom(){
-        return new Rectangle(x, y + getCharacterImage().getHeight(null) - 1, getCharacterImage().getWidth(null), 1);
-    }
-    
-    public void border(Rectangle rectangle){
-        if (rectangle.intersects(hitBox()) ) {
-            setVelocity(new Velocity(0, 0));
-        }
-        
-    }
 //</editor-fold>
+
+    /**
+     * @return the direction
+     */
+    public CharacterMovement getDirection() {
+        return direction;
+    }
+
+    /**
+     * @param direction the direction to set
+     */
+    public void setDirection(CharacterMovement direction) {
+        this.direction = direction;
+    }
 }
