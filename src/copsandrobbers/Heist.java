@@ -147,7 +147,7 @@ class Heist extends Environment {
     }
 
     public void assault() {
-        //if cop can see character, the shoot randomlyd
+        //if cop can see character, he shoots randomly
 
         if ((cops != null) && (character != null)) {
             for (Character cop : cops) {
@@ -234,7 +234,7 @@ class Heist extends Environment {
     @Override
     public void environmentMouseClicked(MouseEvent e
     ) {
-        if (character.bulletCount > 0 && character.mode == "Suspicious") {
+        if (character.bulletCount > 0) {
             System.out.println("shot");
             bullets.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 80), -character.getAngleRadians()));
             character.bulletCount = character.bulletCount - 1;

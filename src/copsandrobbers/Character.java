@@ -96,7 +96,7 @@ public class Character {
     }
 
     public Point centerOfMass() {
-        return new Point(x + getCharacterImage().getWidth(null) / 2, y + getCharacterImage().getHeight(null) / 2);
+        return new Point(x + getCharacterImage().getWidth(null), y + getCharacterImage().getHeight(null));
     }
 
     public Rectangle hitBox() {
@@ -373,7 +373,7 @@ public class Character {
     }
 
     public Circle circle() {
-        return new Circle(x + getCharacterImage().getWidth(null) / 2, y + getCharacterImage().getHeight(null) / 2, getCharacterImage().getWidth(null) * 6);
+        return new Circle(x + getCharacterImage().getWidth(null), y + getCharacterImage().getHeight(null), getCharacterImage().getWidth(null) * 6);
     }
 
     public Rectangle sight() {
