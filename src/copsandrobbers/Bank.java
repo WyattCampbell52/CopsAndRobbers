@@ -26,8 +26,8 @@ public class Bank {
     public Bank() {
         this.image
                 = ResourceTools.loadImageFromResource("images/Bank_Heist_Map.png");
-        this.x = -1500; //-400; //starting x = -400
-        this.y = -100;//-2100; // starting y = -2100
+        this.x = -600; //-400; //starting x = -400
+        this.y = -2400;//-2100; // starting y = -2100
 
         //<editor-fold defaultstate="collapsed" desc="Boundries">
         boundries = new ArrayList<>();
