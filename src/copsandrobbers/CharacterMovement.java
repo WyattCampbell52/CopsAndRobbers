@@ -7,8 +7,8 @@ package copsandrobbers;
 
 /**
  *
- * @author BBC132
+ * @author WyattCampbell
  */
-public enum CharacterType {
-    RobberDallas, RobberHouston, RobberWolf, RobberChains, CopWhiteBlackHair
+public enum CharacterMovement {
+    Up,Down,Left,Right,StopUp,StopDown,StopLeft,StopRight
 }

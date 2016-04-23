@@ -28,8 +28,9 @@ public class Bank {
                 = ResourceTools.loadImageFromResource("images/Bank_Heist_Map.png");
         this.x = -1500; //-400; //starting x = -400
         this.y = -100;//-2100; // starting y = -2100
-
-        //<editor-fold defaultstate="collapsed" desc="Boundries">
+//</editor-fold>
+        
+    //<editor-fold defaultstate="collapsed" desc="Boundries Arraylist">
         boundries = new ArrayList<>();
 //        boundries.add(new Rectangle(x, y, image.getWidth(null) * 6, image.getHeight(null) * 6)); // map boundary
         boundries.add(new Rectangle(x + 325, y + 1595, 820, 18)); // main room north wall left
@@ -82,7 +83,7 @@ public class Bank {
     //<editor-fold defaultstate="collapsed" desc="Draw">
     public void draw(Graphics graphics) {
         graphics.drawImage(image, x, y, image.getWidth(null) * 6, image.getHeight(null) * 6, null);
-
+        
         //<editor-fold defaultstate="collapsed" desc="Boundires Test">
         //boundries test
         graphics.setColor(Color.red);
@@ -100,7 +101,7 @@ public class Bank {
         graphics.drawRect(x + 600, y + 1817, 18, 762); // counter back wall
         graphics.drawRect(x + 600, y + 1817, 72, 18); // counter north wall left
         graphics.drawRect(x + 815, y + 1817, 155, 18); // counter north wall right
-        graphics.drawRect(x + 953, y + 1817, 18, 115); // counter east wall top 
+        graphics.drawRect(x + 953, y + 1817, 18, 115); // counter east wall top
         graphics.drawRect(x + 953, y + 2057, 18, 18); // counter east wall first square
         graphics.drawRect(x + 953, y + 2202, 18, 18); // counter east wall second square
         graphics.drawRect(x + 953, y + 2346, 18, 18); // counter east wall third square
@@ -121,7 +122,7 @@ public class Bank {
         graphics.drawRect(x + 2088, y + 870, 85, 18); // offices north wall second from the left
         graphics.drawRect(x + 2315, y + 870, 18, 18); // office north wall square third from the left
         graphics.drawRect(x + 2585, y + 870, 30, 18); // office north wall right bit
-        graphics.drawRect(x + 2597, y + 870, 18, 989); // office east wall 
+        graphics.drawRect(x + 2597, y + 870, 18, 989); // office east wall
         graphics.drawRect(x + 1656, y + 1841, 959, 18); // office south wall
         graphics.drawRect(x + 324, y + 372, 1602, 18); // empty room north wall plus camera room north wall
         graphics.drawRect(x + 1655, y + 120, 18, 750); // camera room and garabage room west wall
@@ -133,6 +134,7 @@ public class Bank {
         graphics.drawRect(x + 2105, y + 383, 510, 18); // manager office north wall
         graphics.drawRect(x + 2597, y + 383, 18, 505); // manager office east wall
     }
+//</editor-fold>
 //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Properties">
