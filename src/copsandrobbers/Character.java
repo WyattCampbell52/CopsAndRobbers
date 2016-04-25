@@ -86,7 +86,7 @@ public class Character {
 
         AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(angleRadians), x , y);
 //        at.setToTranslation(13, 13);
-        at.setToRotation(getAngleRadians() - 90, x + (getCharacterImage().getWidth(null) / 2 + 10), y + (getCharacterImage().getHeight(null) / 2 + 20));
+        at.setToRotation(getAngleRadians() - 90, x + (getCharacterImage().getWidth(null) / 2 + 50), y + (getCharacterImage().getHeight(null) / 2 + 40));
 
         g2d.setTransform(at);
         g2d.drawImage(getCharacterImage(), x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2, null);

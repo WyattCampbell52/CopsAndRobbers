@@ -39,10 +39,11 @@ class Heist extends Environment {
     private ArrayList<Character> cops;
     private Point mousePosition;
     private Point chase;
-    int characterSpeed = 2;
+    int characterSpeed = 8;
+    private int x = 0;
 
     public Heist() {
-        character = new Character(650, 670, 0.0, CharacterType.CopWhiteBlackHair);
+        character = new Character(620, 400, 0.0, CharacterType.CopWhiteBlackHair);
         bank = new Bank();
         bullets = new ArrayList<>();
         addMouseMotionListener(new MouseAdapter() {
@@ -91,20 +92,15 @@ class Heist extends Environment {
                 projectile.move();
             }
             if (character != null) {
-                character.move();
-                if (bank != null) {
-                    for (Rectangle boundary : bank.boundries) {
-//
-                    }
-                }
                 if (bank != null) {
                     boundries();
                     character.move();
+                    bank.move();
                 }
             }
             if (cops != null) {
-                for (Character character : cops) {
-                    character.move();
+                for (Character cop : cops) {
+                    cop.move();
                 }
             }
         }
@@ -190,16 +186,33 @@ class Heist extends Environment {
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A && character.getDirection() != CharacterMovement.StopLeft) {
             character.setDirection(CharacterMovement.Left);
-            character.setVelocity(new Velocity(-characterSpeed, 0));
+//            character.setVelocity(new Velocity(-characterSpeed, 0));
+            bank.setVelocity(new Velocity(characterSpeed, 0));
+            for (Character cop : cops) {
+                cop.setVelocity(new Velocity(characterSpeed, 0));
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_D && character.getDirection() != CharacterMovement.StopRight) {
             character.setDirection(CharacterMovement.Right);
-            character.setVelocity(new Velocity(characterSpeed, 0));
+//            character.setVelocity(new Velocity(characterSpeed, 0));
+            bank.setVelocity(new Velocity(-characterSpeed, 0));
+            for (Character cop : cops) {
+                cop.setVelocity(new Velocity(-characterSpeed, 0));
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_W && character.getDirection() != CharacterMovement.StopUp) {
             character.setDirection(CharacterMovement.Up);
-            character.setVelocity(new Velocity(0, -characterSpeed));
+//            character.setVelocity(new Velocity(0, -characterSpeed));
+            bank.setVelocity(new Velocity(0, characterSpeed));
+            for (Character cop : cops) {
+                cop.setVelocity(new Velocity(0, characterSpeed));
+            }
         } else if (e.getKeyCode() == KeyEvent.VK_S && character.getDirection() != CharacterMovement.StopDown) {
             character.setDirection(CharacterMovement.Down);
-            character.setVelocity(new Velocity(0, characterSpeed));
+//            character.setVelocity(new Velocity(0, characterSpeed));
+            bank.setVelocity(new Velocity(0, -characterSpeed));
+            for (Character cop : cops) {
+//                cop.setY(cop.getY() - 50);
+                cop.setVelocity(new Velocity(0, -characterSpeed));
+            }
         }
         if (e.getKeyCode() == KeyEvent.VK_G || character.mode == "Engaging") {
             addMouseMotionListener(new MouseAdapter() {

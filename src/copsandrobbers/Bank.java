@@ -141,7 +141,7 @@ public class Bank {
     private Image image;
     private int x;
     private int y;
-    private Velocity velocity;
+    private Velocity velocity = new Velocity(0, 0);
     public final ArrayList<Rectangle> boundries;
 
     /**
