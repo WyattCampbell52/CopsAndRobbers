@@ -38,18 +38,18 @@ class Heist extends Environment {
     private ArrayList<Projectile> bullets;
     private ArrayList<Character> cops;
     private Point mousePosition;
-    private Point wall;
+    private Point chase;
     int characterSpeed = 2;
 
     public Heist() {
-        character = new Character(650, 700, 0.0, CharacterType.RobberDallas);
+        character = new Character(650, 670, 0.0, CharacterType.CopWhiteBlackHair);
         bank = new Bank();
         bullets = new ArrayList<>();
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 mousePosition = e.getPoint();
-                character.setAngleRadians(TrigonometryCalculator.calculateAngle(character.centerOfMass(), mousePosition) + .75);
+                character.setAngleRadians(TrigonometryCalculator.calculateAngle(character.centerOfMass(), mousePosition) + .71);
                 repaint();
             }
         });
@@ -126,9 +126,6 @@ class Heist extends Environment {
                             toCopRemoves.add(cop);
                             toBulletRemoves.add(projectile);
                         }
-                        if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
-//                            character.danger("visible");
-                        }
                     }
                     for (Rectangle boundary : bank.boundries) {
                         if (projectile.hitBox().intersects(boundary)) {
@@ -147,18 +144,24 @@ class Heist extends Environment {
     }
 
     public void assault() {
-        //if cop can see character, the shoot randomlyd
-
+        //if cop can see character, he shoots randomly
         if ((cops != null) && (character != null)) {
             for (Character cop : cops) {
                 if (character.mode == "assault") {
-                    if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height)) {
+                    if (cop.circle().intersects(character.hitBox().x, character.hitBox().y, character.hitBox().width, character.hitBox().height) || cop.sight().intersects(character.hitBox())) {
+
                         if (Math.random() < .05) {
                             if (bullets != null) {
-                                cop.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(cop.getX(), cop.getY()), character.centreOfMass()) + .75);
-                                bullets.add(new Projectile(cop.centreOfMass(), TrigonometryCalculator.calculateVelocity(cop.centreOfMass(), character.centreOfMass(), 80), cop.getAngleRadians()));
+                                cop.setAngleRadians(TrigonometryCalculator.calculateAngle(new Point(cop.getX(), cop.getY()), character.centerOfMass()) + .75);
+                                if (cop.getState() == CharacterState.ASSAULT_RUN || cop.getState() == CharacterState.ASSAULT_STAND || cop.getSuspiciousMeter() > 60) {
+                                    bullets.add(new Projectile(cop.centerOfMass(), TrigonometryCalculator.calculateVelocity(cop.centerOfMass(), character.centerOfMass(), 80), cop.getAngleRadians()));
+                                } else if (cop.getState() == CharacterState.CALM_RUN || cop.getState() == CharacterState.CALM_STAND) {
+                                    cop.setSuspiciousMeter(cop.getSuspiciousMeter() + 1);
+                                }
                             }
                         }
+                    } else if (cop.getSuspiciousMeter() < 60) {
+                        cop.setSuspiciousMeter(cop.getSuspiciousMeter() - 1);
                     }
                 }
             }
@@ -168,6 +171,7 @@ class Heist extends Environment {
     public void boundries() {
         for (Rectangle boundary : bank.boundries) {
             if (character.hitBox().intersects(boundary)) {
+                character.setVelocity(new Velocity(0, 0));
                 if (character.getDirection() == CharacterMovement.Up) {
                     character.setDirection(CharacterMovement.StopUp);
                 } else if (character.getDirection() == CharacterMovement.Down) {
@@ -234,9 +238,9 @@ class Heist extends Environment {
     @Override
     public void environmentMouseClicked(MouseEvent e
     ) {
-        if (character.bulletCount > 0 && character.mode == "Suspicious") {
+        if (character.bulletCount > 0) {
             System.out.println("shot");
-            bullets.add(new Projectile(character.centreOfMass(), TrigonometryCalculator.calculateVelocity(character.centreOfMass(), mousePosition, 80), -character.getAngleRadians()));
+            bullets.add(new Projectile(character.centerOfMass(), TrigonometryCalculator.calculateVelocity(character.centerOfMass(), mousePosition, 80), -character.getAngleRadians()));
             character.bulletCount = character.bulletCount - 1;
             soundManager.play(SILENCESHOT, 1);
             soundManager.play(BULLETDROP, 1);

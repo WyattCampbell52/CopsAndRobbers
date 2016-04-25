@@ -71,7 +71,8 @@ public class Character {
         if (getType() == CharacterType.RobberWolf) {
             graphics.setColor(Color.BLUE);
         }
-        if (getType() == CharacterType.RobberHoxton) {
+        if (getType() == CharacterType.RobberHouston) {
+
             graphics.setColor(Color.GREEN);
         }
         if (getType() == CharacterType.RobberChains) {
@@ -83,23 +84,24 @@ public class Character {
         Graphics2D g2d = (Graphics2D) graphics;
         AffineTransform olde = g2d.getTransform();
 
-        AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(angleRadians));
-        at.setToRotation(getAngleRadians() - 90, x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
+        AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(angleRadians), x , y);
+//        at.setToTranslation(13, 13);
+        at.setToRotation(getAngleRadians() - 90, x + (getCharacterImage().getWidth(null) / 2 + 10), y + (getCharacterImage().getHeight(null) / 2 + 20));
+
         g2d.setTransform(at);
-//        g2d.drawImage(getCharacterImage(), x, y, null);
         g2d.drawImage(getCharacterImage(), x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2, null);
-        graphics.drawRect(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2);
-        graphics.drawRect(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 10);
+        graphics.drawRect(x + 67, y + 60, getCharacterImage().getWidth(null) / 2 + 20, getCharacterImage().getHeight(null) - 30);
+        graphics.drawRect(x + 67, y + 60, getCharacterImage().getWidth(null) / 2 + 20, getCharacterImage().getHeight(null) * 4);
 
         g2d.setTransform(olde);
     }
 
     public Point centerOfMass() {
-        return new Point(x + getCharacterImage().getWidth(null) / 2, y + getCharacterImage().getHeight(null) / 2);
+        return new Point(x + (getCharacterImage().getWidth(null) / 2 + 10), y + (getCharacterImage().getHeight(null) / 2 + 10));
     }
 
     public Rectangle hitBox() {
-        return new Rectangle(getX(), getY(), getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 2);
+        return new Rectangle(x + 67, y + 60, getCharacterImage().getWidth(null) / 2 + 20, getCharacterImage().getHeight(null) - 30);
     }
 //</editor-fold>
 
@@ -138,7 +140,7 @@ public class Character {
 
     private final static ArrayList<String> calmStandCopWhiteBlackHairHolster = new ArrayList<>();
     private final static ArrayList<String> calmStandRobberDallasHolster = new ArrayList<>();
-    private final static ArrayList<String> calmStandRobberHoxtonHolster = new ArrayList<>();
+    private final static ArrayList<String> calmStandRobberHoustonHolster = new ArrayList<>();
     private final static ArrayList<String> calmStandRobberWolfHolster = new ArrayList<>();
     private final static ArrayList<String> calmStandRobberChainsHolster = new ArrayList<>();
 //</editor-fold>
@@ -166,7 +168,7 @@ public class Character {
     private void loadImages() {
         calmStandCopWhiteBlackHairHolster.add(COP_WHITE_BLACKHAIR_Holster_STANDING);
         calmStandRobberDallasHolster.add(ROBBER_DALLAS_Holster_STANDING);
-        calmStandRobberHoxtonHolster.add(ROBBER_HOXTON_Holster_STANDING);
+        calmStandRobberHoustonHolster.add(ROBBER_HOXTON_Holster_STANDING);
         calmStandRobberWolfHolster.add(ROBBER_WOLF_Holster_STANDING);
         calmStandRobberChainsHolster.add(ROBBER_CHAINS_Holster_STANDING);
 
@@ -175,9 +177,9 @@ public class Character {
             ROBBER_CHAINS_Holster_STANDING};
 
         Image[] images = new Image[5];
-        images[0] = ResourceTools.loadImageFromResource("images/White_Guard_HairBlack_One.png");
+        images[0] = ResourceTools.loadImageFromResource("images/White_BlackHair_Guard_Holsterd.png");
         images[1] = ResourceTools.loadImageFromResource("images/Dallas_Unmasked.png");
-        images[2] = ResourceTools.loadImageFromResource("images/Hoxton_Unmasked.png");
+        images[2] = ResourceTools.loadImageFromResource("images/Houston_Unmasked.png");
         images[3] = ResourceTools.loadImageFromResource("images/Wolf_Unmasked.png");
         images[4] = ResourceTools.loadImageFromResource("images/Chains_Unmasked.png");
 
@@ -190,8 +192,9 @@ public class Character {
             animator = new Animator(imageManager, calmStandRobberChainsHolster, 200);
         } else if (getType() == CharacterType.CopWhiteBlackHair) {
             animator = new Animator(imageManager, calmStandCopWhiteBlackHairHolster, 200);
-        } else if (getType() == CharacterType.RobberHoxton) {
-            animator = new Animator(imageManager, calmStandRobberHoxtonHolster, 200);
+
+        } else if (getType() == CharacterType.RobberHouston) {
+            animator = new Animator(imageManager, calmStandRobberHoustonHolster, 200);
         } else {
             animator = new Animator(imageManager, calmStandCopWhiteBlackHairHolster, 200);
         }
@@ -338,11 +341,13 @@ public class Character {
                     } else {
                         animator.setImageNames(calmStandRobberChainsHolster);
                     }
-                } else if (getType() == CharacterType.RobberHoxton) {
+                }
+                if (getType() == CharacterType.RobberHouston) {
+
                     if (state == CharacterState.CALM_STAND) {
-                        animator.setImageNames(calmStandRobberHoxtonHolster);
+                        animator.setImageNames(calmStandRobberHoustonHolster);
                     } else {
-                        animator.setImageNames(calmStandRobberHoxtonHolster);
+                        animator.setImageNames(calmStandRobberHoustonHolster);
                     }
                 } else if (getType() == CharacterType.RobberWolf) {
                     if (state == CharacterState.CALM_STAND) {
@@ -364,16 +369,12 @@ public class Character {
         return type;
     }
 
-    public Point centreOfMass() {
-        return new Point(x + (getCharacterImage().getWidth(null) / 2), y + (getCharacterImage().getHeight(null) / 2));
-    }
-
     public Circle circle() {
-        return new Circle(x + getCharacterImage().getWidth(null) / 2, y + getCharacterImage().getHeight(null) / 2, getCharacterImage().getWidth(null) * 6);
+        return new Circle(x + getCharacterImage().getWidth(null) / 2, y + getCharacterImage().getHeight(null) / 2, getCharacterImage().getWidth(null) * 3);
     }
 
     public Rectangle sight() {
-        return new Rectangle(x, y, getCharacterImage().getWidth(null) * 2, getCharacterImage().getHeight(null) * 10);
+        return new Rectangle(x + 67, y + 60, getCharacterImage().getWidth(null) / 2 + 20, getCharacterImage().getHeight(null) * 4);
     }
 //</editor-fold>
 
