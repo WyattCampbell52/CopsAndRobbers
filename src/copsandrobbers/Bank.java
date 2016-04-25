@@ -141,8 +141,14 @@ public class Bank {
     private Image image;
     private int x;
     private int y;
-    private Velocity velocity;
+    private Velocity velocity = new Velocity(0, 0);
     public final ArrayList<Rectangle> boundries;
+    
+    void move() {
+        x += getVelocity().x;
+        y += getVelocity().y;
+    }
+    
 
     /**
      * @param image the image to set
@@ -178,12 +184,7 @@ public class Bank {
     public void setY(int y) {
         this.y = y;
     }
-
-    void move() {
-        x += velocity.x;
-        y += velocity.y;
-    }
-
+    
     void stop() {
         velocity.x = 0;
         velocity.y = 0;
