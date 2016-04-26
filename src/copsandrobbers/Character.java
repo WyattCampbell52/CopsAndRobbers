@@ -45,6 +45,7 @@ public class Character {
         speed = 5;
         this.type = type;
         loadImages();
+        this.angleRadians = angleRadians;
     }
     //</editor-fold>
 
