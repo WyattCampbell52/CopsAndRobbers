@@ -55,12 +55,12 @@ class Heist extends Environment {
         });
         setUpSound();
         cops = new ArrayList<>();
+        
         cops.add(new Character(bank.getX() + 1700, bank.getY() + 650, 90, CharacterType.CopWhiteBlackHair)); // camerea guard
         cops.add(new Character(bank.getX() + 2370, bank.getY() + 410, 90, CharacterType.CopWhiteBlackHair)); // mamanger
         cops.add(new Character(bank.getX() + 2295, bank.getY() + 610, 118.3, CharacterType.CopWhiteBlackHair)); // civilian in manager office left
         cops.add(new Character(bank.getX() + 2445, bank.getY() + 610, 118.3, CharacterType.CopWhiteBlackHair)); // civilian in manager office right
         cops.add(new Character(bank.getX() + 1520, bank.getY() + 960, 101, CharacterType.CopWhiteBlackHair)); // vault guard
-
     }
 
     //<editor-fold defaultstate="collapsed" desc="SoundManager">

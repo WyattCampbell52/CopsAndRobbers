@@ -44,6 +44,7 @@ public class Character {
         this.y = y;
         speed = 5;
         this.type = type;
+        this.angleRadians = angleRadians;
         loadImages();
         this.angleRadians = angleRadians;
     }
