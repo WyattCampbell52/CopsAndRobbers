@@ -42,7 +42,7 @@ class Heist extends Environment {
     int characterSpeed = 8;
 
     public Heist() {
-        character = new Character(620, 400, 0.0, CharacterType.CopWhiteBlackHair);
+        character = new Character(620, 400, 0, CharacterType.CopWhiteBlackHair);
         bank = new Bank();
         bullets = new ArrayList<>();
         addMouseMotionListener(new MouseAdapter() {
@@ -55,7 +55,7 @@ class Heist extends Environment {
         });
         setUpSound();
         cops = new ArrayList<>();
-        cops.add(new Character(100, 200, 0.0, CharacterType.CopWhiteBlackHair));
+        cops.add(new Character(bank.getX() + 1710, bank.getY() + 650, 90, CharacterType.CopWhiteBlackHair));
     }
 
     SoundManager soundManager;
