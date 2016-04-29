@@ -35,6 +35,7 @@ class Heist extends Environment {
     Projectile shoot;
     Character character;
     CrossHairs crossHairs;
+    private ArrayList<Item> items;
     private ArrayList<Projectile> bullets;
     private ArrayList<Character> cops;
     private Point mousePosition;
@@ -42,9 +43,10 @@ class Heist extends Environment {
     int characterSpeed = 8;
 
     public Heist() {
-        character = new Character(620, 400, 0.0, CharacterType.CopWhiteBlackHair);
+        character = new Character(620, 400, 0.0, CharacterType.RobberDallas);
         bank = new Bank();
         bullets = new ArrayList<>();
+        items = new ArrayList<>();
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -55,6 +57,7 @@ class Heist extends Environment {
         });
         setUpSound();
         cops = new ArrayList<>();
+        items.add(new Item(200, 50, Item.Drill_Bag));
         cops.add(new Character(100, 200, 0.0, CharacterType.CopWhiteBlackHair));
     }
 
@@ -93,11 +96,14 @@ class Heist extends Environment {
             if (character != null) {
                 character.move();
                 if (bank != null) {
-                    for (Character cop : cops) {
+                    if (cops != null) {
+                      for (Character cop : cops) {
                         cop.move();
                         bank.move();
                         boundries();
+                    }  
                     }
+                    
                 }
 
             }
@@ -208,6 +214,7 @@ class Heist extends Environment {
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_G || character.mode == "Engaging") {
+            character.assaultStand();
             addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
@@ -263,6 +270,11 @@ class Heist extends Environment {
         if (bank != null) {
             bank.draw(graphics);
             graphics.drawString("Bullets" + character.bulletCount + "/" + character.magCount, 1300, 800);
+        }
+        if (items !=null) {
+            for (Item drillbag :items){
+            drillbag.draw(graphics);
+        }
         }
         if (crossHairs != null) {
             crossHairs.draw(graphics);
