@@ -18,7 +18,7 @@ public class CrossHairs {
 
     public CrossHairs(Point point) {
         this.point = point;
-        image = ResourceTools.loadImageFromResource("images/Cross_Hairs.png");
+        image = ResourceTools.loadImageFromResource("items/Cross_Hairs.png");
     }
     private Point point;
     private Image image;

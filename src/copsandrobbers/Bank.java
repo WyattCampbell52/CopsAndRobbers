@@ -5,15 +5,12 @@
  */
 package copsandrobbers;
 
-import boundary.Boundary;
-import com.apple.laf.AquaCaret;
 import environment.Velocity;
 import images.ResourceTools;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +22,7 @@ public class Bank {
     //<editor-fold defaultstate="collapsed" desc="Constructor">
     public Bank() {
         this.image
-                = ResourceTools.loadImageFromResource("images/Bank_Heist_Map.png");
+                = ResourceTools.loadImageFromResource("map/Bank_Heist_Map.png");
         this.x = -1500; //-400; //starting x = -400
         this.y = -100;//-2100; // starting y = -2100
 //</editor-fold>
@@ -90,7 +87,8 @@ public class Bank {
         graphics.drawRect(x, y, image.getWidth(null) * 6, image.getHeight(null) * 6); // map boundry
         graphics.drawRect(x + 325, y + 1595 - 6, 820, 18); // main room north wall left
         graphics.drawRect(x + 1290, y + 1543 - 6, 385, 70); // main room north wall right
-        graphics.drawRect(x + 324, y + 372 - 6, 18, 2441); // main room west wall plus empty wall
+        graphics.drawRect(x + 323, y + 372 - 6, 18, 1259); // main room west wall plus empty wall
+        
         graphics.drawRect(x + 324, y + 2795 - 6, 840, 18); // main room south wall left
         graphics.drawRect(x + 1464, y + 2795 - 6, 210, 18); // main room south wall right
         graphics.drawRect(x + 1656, y + 1805 - 6, 18, 1008); // main room east wall

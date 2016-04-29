@@ -44,7 +44,9 @@ public class Character {
         this.y = y;
         speed = 5;
         this.type = type;
+        this.angleRadians = angleRadians;
         loadImages();
+        this.angleRadians = angleRadians;
     }
     //</editor-fold>
 
@@ -215,6 +217,7 @@ public class Character {
         images[12] = ResourceTools.loadImageFromResource("images/Chains_Unmasked.png");
         images[13] = ResourceTools.loadImageFromResource("images/Chains_Primary_01.png");
         images[14] = ResourceTools.loadImageFromResource("images/Chains_Primary_02.png");
+
 
         ImageManager imageManager = new ImageManager(imageNames, images);
         if (getType() == CharacterType.RobberDallas) {
