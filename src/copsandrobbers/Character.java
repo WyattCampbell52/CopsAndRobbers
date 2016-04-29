@@ -178,11 +178,11 @@ public class Character {
             ROBBER_CHAINS_Holster_STANDING};
 
         Image[] images = new Image[5];
-        images[0] = ResourceTools.loadImageFromResource("images/White_BlackHair_Guard_Holsterd.png");
-        images[1] = ResourceTools.loadImageFromResource("images/Dallas_Unmasked.png");
-        images[2] = ResourceTools.loadImageFromResource("images/Houston_Unmasked.png");
-        images[3] = ResourceTools.loadImageFromResource("images/Wolf_Unmasked.png");
-        images[4] = ResourceTools.loadImageFromResource("images/Chains_Unmasked.png");
+        images[0] = ResourceTools.loadImageFromResource("characterimages/White_BlackHair_Guard_Holsterd.png");
+        images[1] = ResourceTools.loadImageFromResource("characterimages/Dallas_Unmasked.png");
+        images[2] = ResourceTools.loadImageFromResource("characterimages/Houston_Unmasked.png");
+        images[3] = ResourceTools.loadImageFromResource("characterimages/Wolf_Unmasked.png");
+        images[4] = ResourceTools.loadImageFromResource("characterimages/Chains_Unmasked.png");
 
         ImageManager imageManager = new ImageManager(imageNames, images);
         if (getType() == CharacterType.RobberDallas) {
