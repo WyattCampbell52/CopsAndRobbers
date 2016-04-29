@@ -25,7 +25,7 @@ public class Projectile {
 
 //    public Projectile(int x, int y, Velocity velocity) {
     public Projectile(Point location, Velocity velocity, double angleRadians) {
-        image = ResourceTools.loadImageFromResource("images/Bullet.png");
+        image = ResourceTools.loadImageFromResource("items/Bullet.png");
         System.out.println(velocity.toString());
         this.x = location.x;
         this.y = location.y;
